@@ -1,0 +1,34 @@
+{
+  "name": "cola-finder",
+  "version": "0.1.0",
+  "description": "Avoid cola disappointment",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "server": "nodemon index.js",
+    "client": "npm run start --prefix client"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codegenie3000/cola-finder.git"
+  },
+  "author": "Jonathan Peralez",
+  "license": "",
+  "bugs": {
+    "url": "https://github.com/codegenie3000/cola-finder/issues"
+  },
+  "homepage": "https://github.com/codegenie3000/cola-finder#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "concurrently": "^3.5.1",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.16.3",
+    "mongoose": "^5.1.1",
+    "nodemon": "^1.17.4",
+    "passport": "^0.4.0",
+    "passport-google-oauth20": "^1.0.0",
+    "path-parser": "^4.1.0"
+  }
+}
