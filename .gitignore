@@ -162,3 +162,7 @@ fabric.properties
 # hide react environment variables
 .env.development
 .env.production
+
+######### Keys ############
+#development keys
+config/dev.js
