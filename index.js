@@ -10,7 +10,7 @@ mongoose.connect(keys.mongoURI, err => {
     if (err) {
         console.log(err);
     } else {
-        console.log('mongo connected');
+        console.log('mongodb connected');
     }
 });
 
