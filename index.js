@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 const keys = require('./config/keys');
 
 require('./models/User');
+require('./models/Restaurant');
 require('./services/passport');
 
 mongoose.connect(keys.mongoURI, err => {
@@ -30,6 +31,7 @@ app.use(passport.session());
 
 // Routes
 require('./routes/authRoutes')(app);
+require('./routes/restaurantRoutes')(app);
 
 app.get('/', (req, res) => {
     res.send('hello');
