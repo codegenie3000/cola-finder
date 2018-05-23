@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const requireLogin = require('../middlewares/requireLogin');
 
 const Restaurant = mongoose.model('restaurants');
 
@@ -23,7 +24,7 @@ module.exports = (app) => {
     });*/
 
     // Create - new POST route
-    app.post('/api/restaurants', async (req, res) => {
+    app.post('/api/restaurants', requireLogin, async (req, res) => {
         const { name, address, city, state, zip, lat, lon, coke } = req.body;
 
         const restaurant = new Restaurant({
@@ -62,7 +63,7 @@ module.exports = (app) => {
         res.send('edit route reached');
     });
     // Update - PUT
-    app.put('/api/restaurants/:id', async (req, res) => {
+    app.put('/api/restaurants/:id', requireLogin, async (req, res) => {
         const restaurantId = req.params.id;
         const { name, address, city, state, zip, lat, lon, coke } = req.body;
 
@@ -85,7 +86,7 @@ module.exports = (app) => {
     });
 
     // DELETE
-    app.delete('/api/restaurants/:id', async (req, res) => {
+    app.delete('/api/restaurants/:id', requireLogin, async (req, res) => {
         const restaurantId = req.params.id;
         const deletedRestaurant = await Restaurant.findByIdAndRemove(restaurantId).exec();
         res.send(deletedRestaurant);
