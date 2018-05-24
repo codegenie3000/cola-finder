@@ -1,26 +1,42 @@
 import React, { Component } from 'react';
+import { LinkContainer } from 'react-router-bootstrap';
 import { connect } from 'react-redux';
+import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
 
 class Header extends Component {
     renderContent() {
-        switch(this.props.auth) {
+        switch (this.props.auth) {
             case null:
                 return;
             case false:
-                return <li><a href="/auth/google">Login with Google</a></li>;
+                return <NavItem eventKey={ 1 } href="/auth/google">Login with Google</NavItem>;
             default:
-                return [
-                    <li><a href="/api/logout">Logout</a></li>
-                ]
+                return (
+                    <NavItem eventKey={ 1 } href="/api/logout">Logout</NavItem>
+                );
         }
     }
+
     render() {
         return (
-            <nav>
-                <ul>
-                {this.renderContent()}
-                </ul>
-            </nav>
+            <Navbar collapseOnSelect>
+                <Navbar.Header>
+                    <Navbar.Brand>
+                        <a href="/">Cola Finder </a>
+                    </Navbar.Brand>
+                    <Navbar.Toggle/>
+                </Navbar.Header>
+                <Navbar.Collapse>
+                    <Nav pullRight>
+                        { this.renderContent() }
+                    </Nav>
+                    <Nav pullRight>
+                        <LinkContainer to="/about">
+                            <NavItem href="/about">About</NavItem>
+                        </LinkContainer>
+                    </Nav>
+                </Navbar.Collapse>
+            </Navbar>
         );
     }
 }
