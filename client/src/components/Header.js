@@ -22,7 +22,9 @@ class Header extends Component {
             <Navbar collapseOnSelect>
                 <Navbar.Header>
                     <Navbar.Brand>
-                        <a href="/">Cola Finder </a>
+                        <LinkContainer to="/">
+                            <a>Cola Finder</a>
+                        </LinkContainer>
                     </Navbar.Brand>
                     <Navbar.Toggle/>
                 </Navbar.Header>
@@ -32,7 +34,7 @@ class Header extends Component {
                     </Nav>
                     <Nav pullRight>
                         <LinkContainer to="/about">
-                            <NavItem href="/about">About</NavItem>
+                            <NavItem>About</NavItem>
                         </LinkContainer>
                     </Nav>
                 </Navbar.Collapse>
