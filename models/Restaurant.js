@@ -8,7 +8,7 @@ const restaurantSchema = new Schema({
     State: String,
     Zip: String,
     lat: Number,
-    lon: Number,
+    lng: Number,
     coke: { type: Boolean, default: false },
     pepsi: { type: Boolean, default: false },
     customMix: { type: Boolean, default: false },
