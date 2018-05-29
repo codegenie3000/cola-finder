@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Grid, Row, Col } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-import { withScriptjs, GoogleMap, Marker, withGoogleMap, InfoWindow } from "react-google-maps";
+import { withScriptjs, GoogleMap, Marker, withGoogleMap, InfoWindow } from 'react-google-maps';
 import { getLocation } from "../actions";
 
 const MapComponent = withScriptjs(withGoogleMap((props) => {
@@ -16,7 +16,9 @@ const MapComponent = withScriptjs(withGoogleMap((props) => {
                 position={{lat: props.latitude, lng: props.longitude}}
             >
                 <InfoWindow>
-                    Test
+                    <div>
+                        Test
+                    </div>
                 </InfoWindow>
             </Marker>
         </GoogleMap>
