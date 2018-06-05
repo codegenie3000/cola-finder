@@ -31,7 +31,8 @@ class Home extends Component {
     }
 
     renderContent() {
-        if (this.props.location.coords) {
+
+        if (this.props.location.coords.latitude !== 0) {
 
             return (
                 <MapComponent
