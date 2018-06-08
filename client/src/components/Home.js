@@ -22,14 +22,13 @@ class Home extends Component {
 
     getMapBoundsOnLoad() {
         if (!this.state.componentLoaded) {
-            console.log('fetch restaurants');
+            console.log(this.mapBounds.getBounds().f, this.mapBounds.getBounds().b);
             this.setState({componentLoaded: true});
         }
     }
 
     getMapBounds() {
         // use this.mapBounds.getBounds().f and .b
-        debugger;
     }
 
     renderContent() {
