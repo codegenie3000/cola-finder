@@ -27,7 +27,7 @@ module.exports = (app) => {
     });
 
     // route for records by lat/lng plus filter criteria
-    app.get('/api/restaurants/bounds/', async (req, res) => {
+    app.get('/api/restaurants/lookup/', async (req, res) => {
 
         const convertToBool = (string) => {
             return (string === 'true');

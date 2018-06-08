@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { FETCH_USER } from './types';
 import { GET_LOCATION } from "./types";
+import { FETCH_RESTAURANTS } from "./types";
 
 export const fetchUser = () => async dispatch => {
     const res = axios.get('/api/current_user');
@@ -33,4 +34,11 @@ export const getLocation = () => async dispatch => {
 
     const userLocation = await location;
     dispatch({type: GET_LOCATION, payload: userLocation});
+};
+
+export const fetchRestaurants = (minLat, maxLat, minLon, maxLon, coke, pepsi, customMix, fountain, realSugar) => async dispatch => {
+    const queryString = `?minLat=${minLat}&maxLat=${maxLat}&minLon=${minLon}&maxLon=${maxLon}&coke=${coke}&pepsi=${pepsi}&customMix=${customMix}&fountain=${fountain}&realSugar=${realSugar}`;
+    // const queryString = `?minLat=${minLat}&maxLat=${maxLat}&minLon=${minLon}&maxLon=${maxLon}&coke=true&pepsi=false&customMix=false&fountain=false&realSugar=false`;
+    const res = await axios.get(`/api/restaurants/lookup/${queryString}`);
+    dispatch({type: FETCH_RESTAURANTS, payload: res});
 };

@@ -1,9 +1,11 @@
+import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Grid, Row, Col } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { withScriptjs, GoogleMap, Marker, withGoogleMap, InfoWindow } from 'react-google-maps';
 import { getLocation } from "../actions";
+import { fetchRestaurants } from "../actions";
 
 
 class Home extends Component {
@@ -22,13 +24,44 @@ class Home extends Component {
 
     getMapBoundsOnLoad() {
         if (!this.state.componentLoaded) {
-            console.log(this.mapBounds.getBounds().f, this.mapBounds.getBounds().b);
+            // console.log(this.mapBounds.getBounds().f, this.mapBounds.getBounds().b);
+            const bounds = this.mapBounds.getBounds();
+            const minLon = bounds.f.b;
+            const maxLon = bounds.f.f;
+            const minLat = bounds.b.b;
+            const maxLat = bounds.b.f;
+
+            const coke = true;
+            const pepsi = false;
+            const customMix = false;
+            const fountain = false;
+            const realSugar = false;
+
+            this.props.fetchRestaurants(minLon, maxLon, minLat, maxLat, coke, pepsi, customMix, fountain, realSugar);
             this.setState({componentLoaded: true});
         }
     }
 
     getMapBounds() {
         // use this.mapBounds.getBounds().f and .b
+    }
+
+    renderMarkers() {
+        return _.map(this.props.restaurants, restaurant => {
+            console.log(restaurant);
+            return (
+                <Marker
+                    position={{lat: restaurant.lat, lng: restaurant.lng}}
+                    key={restaurant.name}
+                >
+                    <InfoWindow>
+                        <div>
+                            {restaurant.name}
+                        </div>
+                    </InfoWindow>
+                </Marker>
+            );
+        });
     }
 
     renderContent() {
@@ -47,15 +80,8 @@ class Home extends Component {
                         ref={(map) => {this.mapBounds = map;}}
                     >
 
-                        <Marker
-                            position={{lat: props.latitude, lng: props.longitude}}
-                        >
-                            <InfoWindow>
-                                <div>
-                                    Test
-                                </div>
-                            </InfoWindow>
-                        </Marker>
+                        {this.renderMarkers()}
+
                     </GoogleMap>
                 );
             }));
@@ -91,8 +117,14 @@ class Home extends Component {
     }
 }
 
-function mapStateToProps({ location }) {
+/*function mapStateToProps({ location }) {
     return { location }
+}*/
+function mapStateToProps(state) {
+    return {
+        location: state.location,
+        restaurants: state.restaurants
+    }
 }
 
-export default connect(mapStateToProps, { getLocation })(Home);
+export default connect(mapStateToProps, { getLocation, fetchRestaurants })(Home);
