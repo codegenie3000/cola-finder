@@ -32,7 +32,7 @@ class Home extends Component {
                         zoom={props.customZoom}
                         center={ {lat: props.latitude, lng: props.longitude}}
                         onZoomChanged={props.getMapBounds}
-                        ref={(map) => {debugger; this.mapBounds = map;}}
+                        ref={(map) => {this.mapBounds = map;}}
                     >
 
                         <Marker
