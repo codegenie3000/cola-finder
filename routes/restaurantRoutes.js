@@ -27,7 +27,6 @@ module.exports = (app) => {
     });
 
     // route for records by lat/lng
-    // query is minLat, maxLat, minLon, MaxLon
     app.get('/api/restaurants/bounds/', async (req, res) => {
         const {minLat, maxLat, minLon, maxLon} = req.query;
         const coords = {
@@ -47,8 +46,6 @@ module.exports = (app) => {
             res.send('err');
         }
     });
-
-    // route for records by lat/lng and filter type
 
     // New - shows form
     /*app.get('/api/restaurants/new', (req, res) => {
