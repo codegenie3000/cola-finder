@@ -26,9 +26,14 @@ module.exports = (app) => {
         }
     });
 
-    // route for records by lat/lng
+    // route for records by lat/lng plus filter criteria
     app.get('/api/restaurants/bounds/', async (req, res) => {
-        const {minLat, maxLat, minLon, maxLon} = req.query;
+
+        const convertToBool = (string) => {
+            return (string === 'true');
+        };
+
+        const {minLat, maxLat, minLon, maxLon, coke, pepsi, customMix, fountain, realSugar} = req.query;
         const coords = {
             minLat: parseFloat(minLat),
             maxLat: parseFloat(maxLat),
@@ -39,7 +44,12 @@ module.exports = (app) => {
         try {
             const restaurants = await Restaurant.find({
                 lat: { $gte: coords.minLat, $lte: coords.maxLat},
-                lng: { $gte: coords.minLon, $lte: coords.maxLon}
+                lng: { $gte: coords.minLon, $lte: coords.maxLon},
+                coke: convertToBool(coke),
+                pepsi: convertToBool(pepsi),
+                customMix: convertToBool(customMix),
+                fountain: convertToBool(fountain),
+                realSugar: convertToBool(realSugar)
             });
             res.send(restaurants);
         } catch {
