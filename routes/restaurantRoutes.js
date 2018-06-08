@@ -57,11 +57,7 @@ module.exports = (app) => {
         }
     });
 
-    // New - shows form
-    /*app.get('/api/restaurants/new', (req, res) => {
-        res.send('new restaurant form');
-    });*/
-
+    // New - shows form - NOT REQUIRED
 
     // Create - new POST route
     //TODO sanitize body
