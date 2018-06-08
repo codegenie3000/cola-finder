@@ -27,6 +27,26 @@ module.exports = (app) => {
     });
 
     // route for records by lat/lng
+    // query is minLat, maxLat, minLon, MaxLon
+    app.get('/api/restaurants/bounds/', async (req, res) => {
+        const {minLat, maxLat, minLon, maxLon} = req.query;
+        const coords = {
+            minLat: parseFloat(minLat),
+            maxLat: parseFloat(maxLat),
+            minLon: parseFloat(minLon),
+            maxLon: parseFloat(maxLon)
+        };
+
+        try {
+            const restaurants = await Restaurant.find({
+                lat: { $gte: coords.minLat, $lte: coords.maxLat},
+                lng: { $gte: coords.minLon, $lte: coords.maxLon}
+            });
+            res.send(restaurants);
+        } catch {
+            res.send('err');
+        }
+    });
 
     // route for records by lat/lng and filter type
 
