@@ -12,7 +12,7 @@ class Home extends Component {
         this.mapBounds = React.createRef();
         this.getMapBounds = this.getMapBounds.bind(this);
         this.state = {
-            'componentLoaded': false
+            componentLoaded: false
         }
     }
 
@@ -23,12 +23,13 @@ class Home extends Component {
     getMapBoundsOnLoad() {
         if (!this.state.componentLoaded) {
             console.log('fetch restaurants');
-            this.setState({'componentLoaded': true});
+            this.setState({componentLoaded: true});
         }
     }
 
     getMapBounds() {
-        console.log(this.mapBounds.getBounds());
+        // use this.mapBounds.getBounds().f and .b
+        debugger;
     }
 
     renderContent() {
@@ -62,6 +63,7 @@ class Home extends Component {
 
             return (
                 <MapComponent
+                    getMapBoundsOnLoad={this.getMapBoundsOnLoad.bind(this)}
                     getMapBounds={this.getMapBounds.bind(this)}
                     latitude={this.props.location.coords.latitude}
                     longitude={this.props.location.coords.longitude}
