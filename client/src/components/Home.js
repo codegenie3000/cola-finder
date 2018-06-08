@@ -5,15 +5,26 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { withScriptjs, GoogleMap, Marker, withGoogleMap, InfoWindow } from 'react-google-maps';
 import { getLocation } from "../actions";
 
+
 class Home extends Component {
     constructor(props) {
         super(props);
         this.mapBounds = React.createRef();
         this.getMapBounds = this.getMapBounds.bind(this);
+        this.state = {
+            'componentLoaded': false
+        }
     }
 
     componentWillMount() {
         this.props.getLocation();
+    }
+
+    getMapBoundsOnLoad() {
+        if (!this.state.componentLoaded) {
+            console.log('fetch restaurants');
+            this.setState({'componentLoaded': true});
+        }
     }
 
     getMapBounds() {
@@ -23,7 +34,7 @@ class Home extends Component {
     renderContent() {
         if (this.props.location.coords.latitude === 0) {
             return (
-                <div>Loading...</div>
+                <div>Finding your location...</div>
             );
         } else {
             const MapComponent = withScriptjs(withGoogleMap((props) => {
@@ -32,6 +43,7 @@ class Home extends Component {
                         zoom={props.customZoom}
                         center={ {lat: props.latitude, lng: props.longitude}}
                         onZoomChanged={props.getMapBounds}
+                        onIdle={props.getMapBoundsOnLoad}
                         ref={(map) => {this.mapBounds = map;}}
                     >
 
