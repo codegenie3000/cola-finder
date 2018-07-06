@@ -13,16 +13,21 @@ class Home extends Component {
         this.googleMapsRef = React.createRef();
         this.getMapBounds = this.getMapBounds.bind(this);
         this.state = {
-            componentLoaded: false, // Used so the map bounds are only loaded once
+            componentLoaded: false, // Used so the map bounds are only retrieved once
             markers: [],
             isOpen: false
         }
     }
 
-    componentWillMount() {
-        // get location from action creator
+    componentDidMount() {
         this.props.getLocation();
     }
+
+    // Deprecated and componentDidMount works just as well
+    /*componentWillMount() {
+        // get location from action creator
+        this.props.getLocation();
+    }*/
 
     getMapBoundsOnLoad() {
         if (!this.state.componentLoaded) {
