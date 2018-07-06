@@ -7,11 +7,10 @@ import { withScriptjs, GoogleMap, Marker, withGoogleMap, InfoWindow } from 'reac
 import { getLocation } from "../actions";
 import { fetchRestaurants } from "../actions";
 
-
 class Home extends Component {
     constructor(props) {
         super(props);
-        this.mapBounds = React.createRef();
+        this.googleMapsRef = React.createRef();
         this.getMapBounds = this.getMapBounds.bind(this);
         this.state = {
             componentLoaded: false
@@ -24,8 +23,8 @@ class Home extends Component {
 
     getMapBoundsOnLoad() {
         if (!this.state.componentLoaded) {
-            // console.log(this.mapBounds.getBounds().f, this.mapBounds.getBounds().b);
-            const bounds = this.mapBounds.getBounds();
+            // console.log(this.googleMapsRef.getBounds().f, this.googleMapsRef.getBounds().b);
+            const bounds = this.googleMapsRef.getBounds();
             const minLon = bounds.f.b;
             const maxLon = bounds.f.f;
             const minLat = bounds.b.b;
@@ -43,12 +42,12 @@ class Home extends Component {
     }
 
     getMapBounds() {
-        // use this.mapBounds.getBounds().f and .b
+        // use this.googleMapsRef.getBounds().f and .b
     }
 
     renderMarkers() {
+
         return _.map(this.props.restaurants, restaurant => {
-            console.log(restaurant);
             return (
                 <Marker
                     position={{lat: restaurant.lat, lng: restaurant.lng}}
@@ -77,7 +76,7 @@ class Home extends Component {
                         center={ {lat: props.latitude, lng: props.longitude}}
                         onZoomChanged={props.getMapBounds}
                         onIdle={props.getMapBoundsOnLoad}
-                        ref={(map) => {this.mapBounds = map;}}
+                        ref={(map) => {this.googleMapsRef = map;}}
                     >
 
                         {this.renderMarkers()}
