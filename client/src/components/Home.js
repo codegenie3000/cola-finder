@@ -13,11 +13,14 @@ class Home extends Component {
         this.googleMapsRef = React.createRef();
         this.getMapBounds = this.getMapBounds.bind(this);
         this.state = {
-            componentLoaded: false
+            componentLoaded: false, // Used so the map bounds are only loaded once
+            markers: [],
+            isOpen: false
         }
     }
 
     componentWillMount() {
+        // get location from action creator
         this.props.getLocation();
     }
 
@@ -47,6 +50,7 @@ class Home extends Component {
 
     renderMarkers() {
 
+        // get restaurants from action reducers
         return _.map(this.props.restaurants, restaurant => {
             return (
                 <Marker
