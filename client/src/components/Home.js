@@ -7,6 +7,8 @@ import { withScriptjs, GoogleMap, Marker, withGoogleMap, InfoWindow } from 'reac
 import { getLocation } from "../actions";
 import { fetchRestaurants } from "../actions";
 
+
+
 class Home extends Component {
     constructor(props) {
         super(props);
@@ -14,7 +16,6 @@ class Home extends Component {
         this.getMapBounds = this.getMapBounds.bind(this);
         this.state = {
             componentLoaded: false, // Used so the map bounds are only retrieved once
-            markers: [],
             isOpen: false
         }
     }
@@ -54,20 +55,16 @@ class Home extends Component {
     }
 
     renderMarkers() {
-
         // get restaurants from action reducers
+        console.log(this.props.restaurants);
         return _.map(this.props.restaurants, restaurant => {
             return (
-                <Marker
-                    position={{lat: restaurant.lat, lng: restaurant.lng}}
+                <RestaurantMarker
                     key={restaurant.name}
-                >
-                    <InfoWindow>
-                        <div>
-                            {restaurant.name}
-                        </div>
-                    </InfoWindow>
-                </Marker>
+                    name={restaurant.name}
+                    latitude={restaurant.lat}
+                    longitude={restaurant.lng}
+                />
             );
         });
     }
@@ -121,6 +118,36 @@ class Home extends Component {
                     </Col>
                 </Row>
             </Grid>
+        );
+    }
+}
+
+class RestaurantMarker extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            open: false
+        }
+    }
+
+    render() {
+        return (
+            <Marker
+                position={ { lat: this.props.latitude, lng: this.props.longitude } }
+                key={ this.props.name }
+                label={
+                    {text: 'foo', color: '#ffffff'}
+                }
+                onClick={() => this.setState({open: !this.state.open})}
+            >
+                {this.state.open ? (
+                    <InfoWindow>
+                        <div>
+                            {this.props.name}
+                        </div>
+                    </InfoWindow>
+                ): ''}
+            </Marker>
         );
     }
 }
