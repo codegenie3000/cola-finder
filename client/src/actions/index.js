@@ -39,6 +39,6 @@ export const getLocation = () => async dispatch => {
 export const fetchRestaurants = (minLat, maxLat, minLon, maxLon, coke, pepsi, customMix, fountain, realSugar) => async dispatch => {
     const queryString = `?minLat=${minLat}&maxLat=${maxLat}&minLon=${minLon}&maxLon=${maxLon}&coke=${coke}&pepsi=${pepsi}&customMix=${customMix}&fountain=${fountain}&realSugar=${realSugar}`;
     // const queryString = `?minLat=${minLat}&maxLat=${maxLat}&minLon=${minLon}&maxLon=${maxLon}&coke=true&pepsi=false&customMix=false&fountain=false&realSugar=false`;
-    const res = await axios.get(`/api/restaurants/lookup/${queryString}`);
+    const res = await axios.get(`/api/restaurants/advanced/${queryString}`);
     dispatch({type: FETCH_RESTAURANTS, payload: res});
 };

@@ -15,9 +15,22 @@ const geocoderOptions = {
 
 const geocoder = NodeGeocoder(geocoderOptions);
 
+const convertToBool = (string) => {
+    return (string === 'true');
+};
+
+const convertCoordinates = (minLat, maxLat, minLon, maxLon) => {
+    return {
+        minLat: parseFloat(minLat),
+        maxLat: parseFloat(maxLat),
+        minLon: parseFloat(minLon),
+        maxLon: parseFloat(maxLon)
+    }
+};
+
 module.exports = (app) => {
     // Index - find all restaurants
-    app.get('/api/restaurants', async (req, res) => {
+    app.get('/api/restaurants/all', async (req, res) => {
         try {
             const restaurants = await Restaurant.find({});
             res.send(restaurants);
@@ -26,8 +39,30 @@ module.exports = (app) => {
         }
     });
 
+    // route for records by lat/lng with only coke or pepsi query
+    // this ignores criteria such as customMix
+    app.get('/api/restaurants/lookup/simple', async(req, res) => {
+        let {minLat, maxLat, minLon, maxLon, coke, pepsi} = req.query;
+
+        const coordinates = convertCoordinates(minLat, maxLat, minLon, maxLon);
+        coke = convertToBool(coke);
+        pepsi = convertToBool(pepsi);
+
+        try {
+            const restaurants = await Restaurant.find({
+                lat: { $gte: coordinates.minLat, $lte: coordinates.maxLat},
+                lng: { $gte: coordinates.minLon, $lte: coordinates.maxLon},
+                coke: coke,
+                pepsi: pepsi
+            });
+            res.send(restaurants);
+        } catch {
+            res.send('err');
+        }
+    });
+
     // route for records by lat/lng plus filter criteria
-    app.get('/api/restaurants/lookup/', async (req, res) => {
+    app.get('/api/restaurants/advanced/', async (req, res) => {
 
         const convertToBool = (string) => {
             return (string === 'true');
