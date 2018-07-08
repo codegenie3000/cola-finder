@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { FETCH_USER } from './types';
+import { SELECT_COLA } from "./types";
 import { GET_LOCATION } from "./types";
 import { FETCH_RESTAURANTS } from "./types";
 
@@ -8,12 +9,12 @@ export const fetchUser = () => async dispatch => {
     dispatch({ type: FETCH_USER, payload: res });
 };
 
-/*
-export const getLocation = () => dispatch => {
-    navigator.geolocation.getCurrentPosition((position) => {
-        dispatch({ type: GET_LOCATION, payload: position });
-    });
-};*/
+export function selectCola(cola) {
+    return {
+        type: 'SELECT_COLA',
+        payload: cola
+    }
+};
 
 export const getLocation = () => async dispatch => {
     const geolocation = navigator.geolocation;
@@ -33,12 +34,12 @@ export const getLocation = () => async dispatch => {
     // return {type: GET_LOCATION, payload: location};
 
     const userLocation = await location;
-    dispatch({type: GET_LOCATION, payload: userLocation});
+    dispatch({ type: GET_LOCATION, payload: userLocation });
 };
 
 export const fetchRestaurants = (minLat, maxLat, minLon, maxLon, coke, pepsi, customMix, fountain, realSugar) => async dispatch => {
     const queryString = `?minLat=${minLat}&maxLat=${maxLat}&minLon=${minLon}&maxLon=${maxLon}&coke=${coke}&pepsi=${pepsi}&customMix=${customMix}&fountain=${fountain}&realSugar=${realSugar}`;
     // const queryString = `?minLat=${minLat}&maxLat=${maxLat}&minLon=${minLon}&maxLon=${maxLon}&coke=true&pepsi=false&customMix=false&fountain=false&realSugar=false`;
     const res = await axios.get(`/api/restaurants/advanced/${queryString}`);
-    dispatch({type: FETCH_RESTAURANTS, payload: res});
+    dispatch({ type: FETCH_RESTAURANTS, payload: res });
 };

@@ -40,7 +40,7 @@ module.exports = (app) => {
     });
 
     // route for records by lat/lng with only coke or pepsi query
-    // this ignores criteria such as customMix
+    // this ignores criteria such as customMix and realSugar
     app.get('/api/restaurants/lookup/simple', async(req, res) => {
         let {minLat, maxLat, minLon, maxLon, coke, pepsi} = req.query;
 
