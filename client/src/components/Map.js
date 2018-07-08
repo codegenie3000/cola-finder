@@ -9,7 +9,7 @@ import { fetchRestaurants } from "../actions";
 
 
 
-class Home extends Component {
+class Map extends Component {
     constructor(props) {
         super(props);
         this.googleMapsRef = React.createRef();
@@ -162,4 +162,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, { getLocation, fetchRestaurants })(Home);
+export default connect(mapStateToProps, { getLocation, fetchRestaurants })(Map);

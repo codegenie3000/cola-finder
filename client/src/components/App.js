@@ -6,7 +6,7 @@ import { Grid, Row, Col } from 'react-bootstrap';
 
 import Header from './Header';
 import About from './About';
-import Home from './Home';
+import Map from './Map';
 import Splash from './Splash';
 
 class App extends Component {
@@ -23,9 +23,9 @@ class App extends Component {
                 <BrowserRouter>
                     <div>
                         <Header/>
-                        <Route exact path="/splash" component={ Splash } />
+                        <Route exact path="/" component={ Splash } />
                         <Route exact path="/about" component={ About }/>
-                        <Route exact path="/" component={ Home }/>
+                        <Route exact path="/map" component={ Map }/>
                     </div>
                 </BrowserRouter>
             </div>
