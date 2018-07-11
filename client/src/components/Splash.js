@@ -103,7 +103,7 @@ const Content = ({selectCola, history}) => {
 };
 
 const ContentButtons = (props) => {
-    const sodas = [ 'Coca-Cola', 'Pepsi' ];
+    const sodas = [ 'Coke', 'Pepsi' ];
 
     return sodas.map((soda) => {
         return (
