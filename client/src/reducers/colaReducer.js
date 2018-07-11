@@ -1,4 +1,4 @@
-export default function (state = {selectedCola: 'Coke'}, action) {
+export default function (state = {selectedCola: 'coke'}, action) {
     switch(action.type) {
         case 'SELECT_COLA':
             return action.payload;

@@ -103,20 +103,29 @@ const Content = ({selectCola, history}) => {
 };
 
 const ContentButtons = (props) => {
-    const sodas = [ 'Coke', 'Pepsi' ];
+    const sodas = [
+        {
+            key: 'coke',
+            name: 'Coca-Cola'
+        },
+        {
+            key: 'pepsi',
+            name: 'Pepsi'
+        }
+    ];
 
     return sodas.map((soda) => {
         return (
-            <Row className="show-grid text-center" key={soda}>
+            <Row className="show-grid text-center" key={soda.key}>
                 <Col xs={ 12 }>
                     <Button
                         style={ addBottomMargin }
                         type="button"
                         bsStyle="primary"
                         bsSize="large"
-                        onClick={() => {props.handleColaSelection(soda)}}
+                        onClick={() => {props.handleColaSelection(soda.key)}}
                     >
-                        { soda }
+                        { soda.name }
                     </Button>
                 </Col>
             </Row>
