@@ -9,7 +9,8 @@ export const fetchUser = () => async dispatch => {
     dispatch({ type: FETCH_USER, payload: res });
 };
 
-export function selectCola(cola) {
+export function selectCola(cola, history) {
+    history.push('/map');
     return {
         type: 'SELECT_COLA',
         payload: cola
