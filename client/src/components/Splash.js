@@ -81,7 +81,21 @@ class About extends Component {
 
 const Content = ({selectCola, history}) => {
     const clickHandler = (selection) => {
-        selectCola({selectedCola: selection}, history);
+        const colaSelection = (() => {
+            if (selection === 'Coke') {
+                return {
+                    coke: true,
+                    pepsi: false
+                }
+            } else {
+                return {
+                    coke: false,
+                    pepsi: true
+                }
+            }
+        })();
+
+        selectCola(colaSelection, history);
     };
 
     return (
@@ -103,29 +117,20 @@ const Content = ({selectCola, history}) => {
 };
 
 const ContentButtons = (props) => {
-    const sodas = [
-        {
-            key: 'coke',
-            name: 'Coca-Cola'
-        },
-        {
-            key: 'pepsi',
-            name: 'Pepsi'
-        }
-    ];
+    const sodas = ['Coke', 'Pepsi'];
 
     return sodas.map((soda) => {
         return (
-            <Row className="show-grid text-center" key={soda.key}>
+            <Row className="show-grid text-center" key={soda}>
                 <Col xs={ 12 }>
                     <Button
                         style={ addBottomMargin }
                         type="button"
                         bsStyle="primary"
                         bsSize="large"
-                        onClick={() => {props.handleColaSelection(soda.key)}}
+                        onClick={() => {props.handleColaSelection(soda)}}
                     >
-                        { soda.name }
+                        { soda }
                     </Button>
                 </Col>
             </Row>
