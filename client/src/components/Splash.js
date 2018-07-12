@@ -26,8 +26,8 @@ const Content = ({selectCola, getLocation, history}) => {
             }
         })();
 
-        getLocation();
-        selectCola(colaSelection, history);
+        getLocation(); // runs getLocation action
+        selectCola(colaSelection, history); //runs the selectCola action and pass the history object to it
     };
 
     return (
@@ -36,7 +36,7 @@ const Content = ({selectCola, getLocation, history}) => {
                 <Col xs={ 12 }>
                     <Jumbotron>
                         <h1>Avoid cola disappointment</h1>
-                        <p>Find out if a restaurant has Coke, Pepsi, or organic sodas before you make your decision</p>
+                        <p>Find out if a restaurant has Coke, Pepsi, or organic sodas before you make your dining decision</p>
                     </Jumbotron>
                 </Col>
             </Row>
