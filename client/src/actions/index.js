@@ -33,10 +33,13 @@ export const getLocation = () => async dispatch => {
         });
     });
 
-    // return {type: GET_LOCATION, payload: location};
+    const browserLocation = await location;
+    const reducerLocation = {
+        latitude: browserLocation.coords.latitude,
+        longitude: browserLocation.coords.longitude
+    };
 
-    const userLocation = await location;
-    dispatch({ type: GET_LOCATION, payload: userLocation });
+    dispatch({ type: GET_LOCATION, payload: reducerLocation });
 };
 
 export const fetchRestaurants = (minLat, maxLat, minLon, maxLon, coke, pepsi, customMix, fountain, realSugar) => async dispatch => {

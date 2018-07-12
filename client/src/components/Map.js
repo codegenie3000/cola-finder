@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Grid, Row, Col } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { withScriptjs, GoogleMap, Marker, withGoogleMap, InfoWindow } from 'react-google-maps';
-import { getLocation } from "../actions";
+// import { getLocation } from "../actions";
 import { fetchRestaurantsSimple } from "../actions";
 
 
@@ -21,7 +21,7 @@ class Map extends Component {
     }
 
     componentDidMount() {
-        this.props.getLocation();
+        // this.props.location();
     }
 
     // Deprecated and componentDidMount works just as well
@@ -71,7 +71,7 @@ class Map extends Component {
     }
 
     renderContent() {
-        if (this.props.location.coords.latitude === 0) {
+        if (this.props.location.latitude === 0) {
             return (
                 <div>Finding your location...</div>
             );
@@ -96,8 +96,8 @@ class Map extends Component {
                 <MapComponent
                     getMapBoundsOnLoad={this.getMapBoundsOnLoad.bind(this)}
                     getMapBounds={this.getMapBounds.bind(this)}
-                    latitude={this.props.location.coords.latitude}
-                    longitude={this.props.location.coords.longitude}
+                    latitude={this.props.location.latitude}
+                    longitude={this.props.location.longitude}
                     isMarkerShown
                     customZoom={15}
                     googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_MAPS_KEY}&?v=3.exp&libraries=geometry,drawing,places`}
@@ -164,4 +164,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, { getLocation, fetchRestaurantsSimple })(Map);
+export default connect(mapStateToProps, { fetchRestaurantsSimple })(Map);
