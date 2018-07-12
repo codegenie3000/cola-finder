@@ -8,27 +8,15 @@ import { withScriptjs, GoogleMap, Marker, withGoogleMap, InfoWindow } from 'reac
 import { fetchRestaurantsSimple } from "../actions";
 
 
-
 class Map extends Component {
     constructor(props) {
         super(props);
-        this.googleMapsRef = React.createRef();
-        this.getMapBounds = this.getMapBounds.bind(this);
+        this.googleMapsRef = React.createRef(); // Creates a browser reference
+        // this.getMapBounds = this.getMapBounds.bind(this);
         this.state = {
             componentLoaded: false, // Used so the map bounds are only retrieved once
-            isOpen: false
         }
     }
-
-    componentDidMount() {
-        // this.props.location();
-    }
-
-    // Deprecated and componentDidMount works just as well
-    /*componentWillMount() {
-        // get location from action creator
-        this.props.getLocation();
-    }*/
 
     getMapBoundsOnLoad() {
         if (!this.state.componentLoaded) {
@@ -41,11 +29,6 @@ class Map extends Component {
 
             const {colaType} = this.props;
 
-            const customMix = false;
-            const fountain = false;
-            const realSugar = false;
-
-            // this.props.fetchRestaurants(minLon, maxLon, minLat, maxLat, coke, pepsi, customMix, fountain, realSugar);
             this.props.fetchRestaurantsSimple(minLon, maxLon, minLat, maxLat, colaType.coke, colaType.pepsi);
             this.setState({componentLoaded: true});
         }
@@ -71,7 +54,7 @@ class Map extends Component {
     }
 
     renderContent() {
-        if (this.props.location.latitude === 0) {
+        if (!this.props.location) {
             return (
                 <div>Finding your location...</div>
             );
