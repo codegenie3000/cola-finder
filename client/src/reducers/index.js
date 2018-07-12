@@ -6,7 +6,7 @@ import restaurantReducers from './restaurantReducers';
 
 export default combineReducers({
     auth: authReducer,
-    colaReducer: colaReducer,
+    colaType: colaReducer,
     location: locationReducer,
     restaurants: restaurantReducers
 });

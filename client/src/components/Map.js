@@ -5,7 +5,7 @@ import { Grid, Row, Col } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { withScriptjs, GoogleMap, Marker, withGoogleMap, InfoWindow } from 'react-google-maps';
 import { getLocation } from "../actions";
-import { fetchRestaurants } from "../actions";
+import { fetchRestaurantsSimple } from "../actions";
 
 
 
@@ -39,13 +39,14 @@ class Map extends Component {
             const minLat = bounds.b.b;
             const maxLat = bounds.b.f;
 
-            const coke = true;
-            const pepsi = false;
+            const {colaType} = this.props;
+
             const customMix = false;
             const fountain = false;
             const realSugar = false;
 
-            this.props.fetchRestaurants(minLon, maxLon, minLat, maxLat, coke, pepsi, customMix, fountain, realSugar);
+            // this.props.fetchRestaurants(minLon, maxLon, minLat, maxLat, coke, pepsi, customMix, fountain, realSugar);
+            this.props.fetchRestaurantsSimple(minLon, maxLon, minLat, maxLat, colaType.coke, colaType.pepsi);
             this.setState({componentLoaded: true});
         }
     }
@@ -56,7 +57,7 @@ class Map extends Component {
 
     renderMarkers() {
         // get restaurants from action reducers
-        console.log(this.props.restaurants);
+        // console.log(this.props.restaurants);
         return _.map(this.props.restaurants, restaurant => {
             return (
                 <RestaurantMarker
@@ -158,8 +159,9 @@ class RestaurantMarker extends Component {
 function mapStateToProps(state) {
     return {
         location: state.location,
-        restaurants: state.restaurants
+        restaurants: state.restaurants,
+        colaType: state.colaType
     }
 }
 
-export default connect(mapStateToProps, { getLocation, fetchRestaurants })(Map);
+export default connect(mapStateToProps, { getLocation, fetchRestaurantsSimple })(Map);

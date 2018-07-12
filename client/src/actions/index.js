@@ -3,6 +3,7 @@ import { FETCH_USER } from './types';
 import { SELECT_COLA } from "./types";
 import { GET_LOCATION } from "./types";
 import { FETCH_RESTAURANTS } from "./types";
+import { FETCH_RESTAURANTS_SIMPLE } from "./types";
 
 export const fetchUser = () => async dispatch => {
     const res = axios.get('/api/current_user');
@@ -43,4 +44,13 @@ export const fetchRestaurants = (minLat, maxLat, minLon, maxLon, coke, pepsi, cu
     // const queryString = `?minLat=${minLat}&maxLat=${maxLat}&minLon=${minLon}&maxLon=${maxLon}&coke=true&pepsi=false&customMix=false&fountain=false&realSugar=false`;
     const res = await axios.get(`/api/restaurants/advanced/${queryString}`);
     dispatch({ type: FETCH_RESTAURANTS, payload: res });
+};
+
+export const fetchRestaurantsSimple = (minLat, maxLat, minLon, maxLon, coke, pepsi) =>  async dispatch => {
+    const urlQuery = '/api/restaurants/lookup/simple';
+    const coordQuery = `minLat=${minLat}&maxLat=${maxLat}&minLon=${minLon}&maxLon=${maxLon}&`;
+    const colaQuery = `coke=${coke}&pepsi=${pepsi}`;
+    const query = `${urlQuery}?${coordQuery}${colaQuery}`;
+    const res = await axios.get(query);
+    dispatch({ type: FETCH_RESTAURANTS_SIMPLE, payload: res});
 };
