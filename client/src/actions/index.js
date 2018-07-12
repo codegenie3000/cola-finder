@@ -17,7 +17,7 @@ export function selectCola(cola, history) {
         type: 'SELECT_COLA',
         payload: cola
     }
-};
+}
 
 export const getLocation = () => async dispatch => {
     const geolocation = navigator.geolocation;
@@ -57,4 +57,11 @@ export const fetchRestaurantsSimple = (minLat, maxLat, minLon, maxLon, coke, pep
     const query = `${urlQuery}?${coordQuery}${colaQuery}`;
     const res = await axios.get(query);
     dispatch({ type: FETCH_RESTAURANTS_SIMPLE, payload: res});
+};
+
+export const setMapBounds = (mapBounds) => {
+    return {
+        type: 'SET_MAP_BOUNDS',
+        payload: mapBounds
+    }
 };
