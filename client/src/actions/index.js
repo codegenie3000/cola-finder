@@ -1,9 +1,10 @@
 import axios from 'axios';
 import { FETCH_USER } from './types';
-import { SELECT_COLA } from "./types";
-import { GET_LOCATION } from "./types";
-import { FETCH_RESTAURANTS } from "./types";
-import { FETCH_RESTAURANTS_SIMPLE } from "./types";
+import { SELECT_COLA } from './types';
+import { GET_LOCATION } from './types';
+import { FETCH_RESTAURANTS } from './types';
+import { FETCH_RESTAURANTS_SIMPLE } from './types';
+import { SET_MAP_BOUNDS} from './types';
 
 export const fetchUser = () => async dispatch => {
     const res = axios.get('/api/current_user');
