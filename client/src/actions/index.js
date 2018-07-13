@@ -4,7 +4,7 @@ import { SELECT_COLA } from './types';
 import { GET_LOCATION } from './types';
 import { FETCH_RESTAURANTS } from './types';
 import { FETCH_RESTAURANTS_SIMPLE } from './types';
-import { SET_MAP_BOUNDS} from './types';
+import { SET_MAP_BOUNDS } from './types';
 
 export const fetchUser = () => async dispatch => {
     const res = axios.get('/api/current_user');
@@ -14,7 +14,7 @@ export const fetchUser = () => async dispatch => {
 export function selectCola(cola, history) {
     history.push('/map');
     return {
-        type: 'SELECT_COLA',
+        type: SELECT_COLA,
         payload: cola
     }
 }
@@ -50,18 +50,18 @@ export const fetchRestaurants = (minLat, maxLat, minLon, maxLon, coke, pepsi, cu
     dispatch({ type: FETCH_RESTAURANTS, payload: res });
 };
 
-export const fetchRestaurantsSimple = (minLat, maxLat, minLon, maxLon, coke, pepsi) =>  async dispatch => {
+export const fetchRestaurantsSimple = (minLat, maxLat, minLon, maxLon, coke, pepsi) => async dispatch => {
     const urlQuery = '/api/restaurants/lookup/simple';
     const coordQuery = `minLat=${minLat}&maxLat=${maxLat}&minLon=${minLon}&maxLon=${maxLon}&`;
     const colaQuery = `coke=${coke}&pepsi=${pepsi}`;
     const query = `${urlQuery}?${coordQuery}${colaQuery}`;
     const res = await axios.get(query);
-    dispatch({ type: FETCH_RESTAURANTS_SIMPLE, payload: res});
+    dispatch({ type: FETCH_RESTAURANTS_SIMPLE, payload: res });
 };
 
-export const setMapBounds = (mapBounds) => {
+export function setMapBounds(mapBounds) {
     return {
-        type: 'SET_MAP_BOUNDS',
+        type: SET_MAP_BOUNDS,
         payload: mapBounds
     }
-};
+}
