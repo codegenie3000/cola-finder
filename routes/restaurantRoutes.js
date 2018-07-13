@@ -41,7 +41,6 @@ module.exports = (app) => {
 
     app.get('/api/restaurants/lookup', async(req, res) => {
         // must be sent for all queries
-        console.log(req.query);
         let {minLat, maxLat, minLon, maxLon, coke, pepsi} = req.query;
         const coordinates = convertCoordinates(minLat, maxLat, minLon, maxLon);
         coke = convertToBool(coke);
@@ -111,7 +110,6 @@ module.exports = (app) => {
         } else {
             let data = await geocoder.geocode(`${address}, ${city}, ${state}, ${zip}`);
             data = data[0];
-            console.log(data);
 
             const restaurantData = {
                 name: name,
