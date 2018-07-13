@@ -1,14 +1,12 @@
 import { combineReducers } from 'redux';
 import authReducer from './authReducer';
-import colaReducer from './colaReducer';
 import locationReducer from './locationReducer';
-import restaurantReducers from './restaurantReducers';
-import mapBoundsReducer from './mapBoundsReducer';
+import restaurantReducer from './restaurantReducer';
+import filterReducer from './filterReducer';
 
 export default combineReducers({
     auth: authReducer,
-    colaType: colaReducer,
+    filter: filterReducer,
     location: locationReducer,
-    restaurants: restaurantReducers,
-    mapBounds: mapBoundsReducer
+    restaurants: restaurantReducer
 });

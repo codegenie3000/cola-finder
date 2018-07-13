@@ -41,6 +41,7 @@ module.exports = (app) => {
 
     app.get('/api/restaurants/lookup', async(req, res) => {
         // must be sent for all queries
+        console.log(req.query);
         let {minLat, maxLat, minLon, maxLon, coke, pepsi} = req.query;
         const coordinates = convertCoordinates(minLat, maxLat, minLon, maxLon);
         coke = convertToBool(coke);

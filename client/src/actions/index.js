@@ -1,25 +1,34 @@
 import axios from 'axios';
 import { FETCH_USER } from './types';
-import { SELECT_COLA } from './types';
-import { GET_LOCATION } from './types';
+import { SET_LOCATION } from './types';
 import { FETCH_RESTAURANTS } from './types';
 import { FETCH_RESTAURANTS_SIMPLE } from './types';
 import { SET_MAP_BOUNDS } from './types';
+import { SET_SIMPLE_FILTER_COLA } from './types';
 
 export const fetchUser = () => async dispatch => {
     const res = axios.get('/api/current_user');
     dispatch({ type: FETCH_USER, payload: res });
 };
 
-export function selectCola(cola, history) {
-    history.push('/map');
+/*export function selectCola(cola, history) {
+    // history.push('/map');
     return {
         type: SELECT_COLA,
         payload: cola
     }
+}*/
+
+export function setSimpleFilterCola(cola, history) {
+// export function setSimpleFilterCola(cola) {
+    history.push('/map');
+    return {
+        type: SET_SIMPLE_FILTER_COLA,
+        payload: cola
+    }
 }
 
-export const getLocation = () => async dispatch => {
+export const setLocation = () => async dispatch => {
     const geolocation = navigator.geolocation;
 
     const location = new Promise((resolve, reject) => {
@@ -40,7 +49,7 @@ export const getLocation = () => async dispatch => {
         longitude: browserLocation.coords.longitude
     };
 
-    dispatch({ type: GET_LOCATION, payload: reducerLocation });
+    dispatch({ type: SET_LOCATION, payload: reducerLocation });
 };
 
 export const fetchRestaurants = (minLat, maxLat, minLon, maxLon, coke, pepsi, customMix, fountain, realSugar) => async dispatch => {

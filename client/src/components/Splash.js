@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import {selectCola} from '../actions';
-import {getLocation} from '../actions';
+import {setSimpleFilterCola} from '../actions';
+import {setLocation} from '../actions';
 import {withRouter} from 'react-router-dom';
 import {bindActionCreators} from 'redux';
 import { Grid, Row, Col, Jumbotron, Button } from 'react-bootstrap';
@@ -10,7 +10,7 @@ const addBottomMargin = {
     marginBottom: '10px'
 };
 
-const Content = ({selectCola, getLocation, history}) => {
+const Content = ({setSimpleFilterCola, setLocation, history}) => {
     const clickHandler = (selection) => {
         const colaSelection = (() => {
             if (selection === 'Coke') {
@@ -26,8 +26,10 @@ const Content = ({selectCola, getLocation, history}) => {
             }
         })();
 
-        getLocation(); // runs getLocation action
-        selectCola(colaSelection, history); //runs the selectCola action and pass the history object to it
+        setLocation(); // runs setLocation action which sets the location via the browser
+
+        setSimpleFilterCola(colaSelection, history);
+
     };
 
     return (
@@ -76,8 +78,9 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
-        selectCola: selectCola,
-        getLocation: getLocation
+        setSimpleFilterCola: setSimpleFilterCola,
+        setLocation: setLocation
+        // selectCola: selectCola
     }, dispatch);
 }
 

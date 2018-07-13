@@ -5,7 +5,7 @@ import { Grid, Row, Col } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { withScriptjs, GoogleMap, Marker, withGoogleMap, InfoWindow } from 'react-google-maps';
 import {bindActionCreators } from 'redux';
-// import { getLocation } from '../actions';
+// import { setLocation } from '../actions';
 import { setMapBounds } from '../actions';
 import { fetchRestaurantsSimple } from '../actions';
 
@@ -37,9 +37,10 @@ class Map extends Component {
                 maxLat: maxLat
             });
 
-            const { colaType } = this.props;
+            const { simpleFilter } = this.props;
+            console.log(this.props);
 
-            this.props.fetchRestaurantsSimple(minLon, maxLon, minLat, maxLat, colaType.coke, colaType.pepsi);
+            this.props.fetchRestaurantsSimple(minLon, maxLon, minLat, maxLat, simpleFilter.coke, simpleFilter.pepsi);
             this.setState({ componentLoaded: true });
         }
     }
@@ -88,7 +89,7 @@ class Map extends Component {
 
             return (
                 <MapComponent
-                    // getMapBoundsOnLoad={ this.getMapBoundsOnLoad.bind(this) }
+                    getMapBoundsOnLoad={ this.getMapBoundsOnLoad.bind(this) }
                     // getMapBounds={ this.getMapBounds.bind(this) }
                     latitude={ this.props.location.latitude }
                     longitude={ this.props.location.longitude }
@@ -146,12 +147,12 @@ class RestaurantMarker extends Component {
     }
 }
 
-/*function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch) {
     return bindActionCreators({
         setMapBounds: setMapBounds,
         fetchRestaurantsSimple: fetchRestaurantsSimple
     }, dispatch);
-}*/
+}
 
 /*function mapStateToProps({ location }) {
     return { location }
@@ -160,10 +161,10 @@ function mapStateToProps(state) {
     return {
         location: state.location,
         restaurants: state.restaurants,
-        colaType: state.colaType,
+        simpleFilter: state.filter.simpleFilter,
         mapBounds: state.mapBounds
     }
 }
 
-export default connect(mapStateToProps, { fetchRestaurantsSimple, setMapBounds })(Map);
-// export default connect(mapStateToProps, mapDispatchToProps)(Map);
+// export default connect(mapStateToProps, { fetchRestaurantsSimple, setMapBounds })(Map);
+export default connect(mapStateToProps, mapDispatchToProps)(Map);
