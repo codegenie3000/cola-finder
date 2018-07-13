@@ -14,9 +14,10 @@ class Map extends Component {
     constructor(props) {
         super(props);
         this.googleMapsRef = React.createRef(); // Creates a browser reference
-        // this.getMapBounds = this.getMapBounds.bind(this);
+        // this.getMapBounds = this.getMapBounds.bind(this); - NOT NEEDED
         this.state = {
             componentLoaded: false, // Used so the map bounds are only retrieved once
+            useSimpleFilter: true
         }
     }
 
@@ -71,13 +72,12 @@ class Map extends Component {
             const MapComponent = withScriptjs(withGoogleMap((props) => {
                 return (
                     <GoogleMap
-                        zoom={ props.customZoom }
+                        zoom={15}
                         center={ { lat: props.latitude, lng: props.longitude } }
-                        onZoomChanged={ props.getMapBounds }
-                        onIdle={ props.getMapBoundsOnLoad }
-                        ref={ (map) => {
-                            this.googleMapsRef = map;
-                        } }
+                        // onZoomChanged={ props.getMapBounds }
+                        // onIdle={ props.getMapBoundsOnLoad }
+                        onIdle={ this.getMapBoundsOnLoad.bind(this) }
+                        ref={ (map) => { this.googleMapsRef = map; } }
                     >
 
                         { this.renderMarkers() }
@@ -88,12 +88,11 @@ class Map extends Component {
 
             return (
                 <MapComponent
-                    getMapBoundsOnLoad={ this.getMapBoundsOnLoad.bind(this) }
-                    getMapBounds={ this.getMapBounds.bind(this) }
+                    // getMapBoundsOnLoad={ this.getMapBoundsOnLoad.bind(this) }
+                    // getMapBounds={ this.getMapBounds.bind(this) }
                     latitude={ this.props.location.latitude }
                     longitude={ this.props.location.longitude }
                     isMarkerShown
-                    customZoom={ 15 }
                     googleMapURL={ `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_MAPS_KEY}&?v=3.exp&libraries=geometry,drawing,places` }
                     loadingElement={ <div style={ { height: `100%` } }/> }
                     containerElement={ <div style={ { height: `400px` } }/> }
@@ -161,7 +160,8 @@ function mapStateToProps(state) {
     return {
         location: state.location,
         restaurants: state.restaurants,
-        colaType: state.colaType
+        colaType: state.colaType,
+        mapBounds: state.mapBounds
     }
 }
 
