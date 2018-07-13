@@ -40,12 +40,9 @@ const Content = ({selectCola, getLocation, history}) => {
                     </Jumbotron>
                 </Col>
             </Row>
-
             <ContentButtons handleColaSelection={clickHandler}/>
-
         </Grid>
     );
-
 };
 
 const ContentButtons = (props) => {
