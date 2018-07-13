@@ -51,10 +51,10 @@ export const fetchRestaurants = (minLat, maxLat, minLon, maxLon, coke, pepsi, cu
 };
 
 export const fetchRestaurantsSimple = (minLat, maxLat, minLon, maxLon, coke, pepsi) => async dispatch => {
-    const urlQuery = '/api/restaurants/lookup/simple';
+    const urlQuery = '/api/restaurants/lookup?';
     const coordQuery = `minLat=${minLat}&maxLat=${maxLat}&minLon=${minLon}&maxLon=${maxLon}&`;
     const colaQuery = `coke=${coke}&pepsi=${pepsi}`;
-    const query = `${urlQuery}?${coordQuery}${colaQuery}`;
+    const query = `${urlQuery}${coordQuery}${colaQuery}`;
     const res = await axios.get(query);
     dispatch({ type: FETCH_RESTAURANTS_SIMPLE, payload: res });
 };

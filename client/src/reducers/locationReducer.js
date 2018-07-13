@@ -1,4 +1,4 @@
-import { GET_LOCATION } from "../actions/types";
+import { GET_LOCATION } from '../actions/types';
 
 export default function (state = null, action) {
 // export default function (state = null, action) {
