@@ -7,7 +7,6 @@ import Header from './Header';
 import About from './About';
 import Map from './Map';
 import Splash from './Splash';
-import Filter from './FilterQuery'
 
 class App extends Component {
     constructor(props) {
@@ -26,7 +25,6 @@ class App extends Component {
                         <Route exact path="/" component={ Splash } />
                         <Route exact path="/about" component={ About }/>
                         <Route exact path="/map" component={ Map }/>
-                        <Route exact path="/filter" component={ Filter } />
                     </div>
                 </BrowserRouter>
             </div>
