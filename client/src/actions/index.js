@@ -19,12 +19,15 @@ export const fetchUser = () => async dispatch => {
     }
 }*/
 
-export function setSimpleFilterCola(cola, history) {
+export function setSimpleFilterCola(simpleFilter, simpleFilterSettings, history) {
 // export function setSimpleFilterCola(cola) {
     history.push('/map');
     return {
         type: SET_SIMPLE_FILTER_COLA,
-        payload: cola
+        payload: {
+            simpleFilter: simpleFilter,
+            simpleFilterSettings: simpleFilterSettings
+        }
     }
 }
 

@@ -4,11 +4,9 @@ import { connect } from 'react-redux';
 import { Grid, Row, Col } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { withScriptjs, GoogleMap, Marker, withGoogleMap, InfoWindow } from 'react-google-maps';
-import {bindActionCreators } from 'redux';
-// import { setLocation } from '../actions';
+import { bindActionCreators } from 'redux';
 import { setMapBounds } from '../actions';
 import { fetchRestaurantsSimple } from '../actions';
-
 
 class Map extends Component {
     constructor(props) {
@@ -37,10 +35,10 @@ class Map extends Component {
                 maxLat: maxLat
             });
 
-            const { simpleFilter } = this.props;
-            console.log(this.props);
+            const { filter } = this.props;
+            // console.log(simpleFilterSettings);
 
-            this.props.fetchRestaurantsSimple(minLon, maxLon, minLat, maxLat, simpleFilter.coke, simpleFilter.pepsi);
+            this.props.fetchRestaurantsSimple(minLon, maxLon, minLat, maxLat, filter.simpleFilterSettings.coke, filter.simpleFilterSettings.pepsi);
             this.setState({ componentLoaded: true });
         }
     }
@@ -59,6 +57,7 @@ class Map extends Component {
                     name={ restaurant.name }
                     latitude={ restaurant.lat }
                     longitude={ restaurant.lng }
+                    isOpen={ false }
                 />
             );
         });
@@ -73,15 +72,17 @@ class Map extends Component {
             const MapComponent = withScriptjs(withGoogleMap((props) => {
                 return (
                     <GoogleMap
-                        zoom={15}
+                        zoom={ 15 }
                         center={ { lat: props.latitude, lng: props.longitude } }
                         // onZoomChanged={ props.getMapBounds }
                         // onIdle={ props.getMapBoundsOnLoad }
                         onIdle={ this.getMapBoundsOnLoad.bind(this) }
-                        ref={ (map) => { this.googleMapsRef = map; } }
+                        ref={ (map) => {
+                            this.googleMapsRef = map;
+                        } }
                     >
 
-                        { this.renderMarkers() }
+                        {this.renderMarkers()}
 
                     </GoogleMap>
                 );
@@ -110,6 +111,11 @@ class Map extends Component {
                 <Row className="show-grid">
                     <Col xs={ 12 }>
                         { this.renderContent() }
+                    </Col>
+                </Row>
+                <Row className="show-grid">
+                    <Col xs={ 12 }>
+                        <p className="lead">Change cola type:</p>
                     </Col>
                 </Row>
             </Grid>
@@ -161,7 +167,7 @@ function mapStateToProps(state) {
     return {
         location: state.location,
         restaurants: state.restaurants,
-        simpleFilter: state.filter.simpleFilter,
+        filter: state.filter,
         mapBounds: state.mapBounds
     }
 }
