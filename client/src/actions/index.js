@@ -5,6 +5,7 @@ import { FETCH_RESTAURANTS } from './types';
 import { FETCH_RESTAURANTS_SIMPLE } from './types';
 import { SET_MAP_BOUNDS } from './types';
 import { SET_SIMPLE_FILTER_COLA } from './types';
+import { SET_USER_SELECTED_RESTAURANT} from './types';
 
 export const fetchUser = () => async dispatch => {
     const res = axios.get('/api/current_user');
@@ -28,6 +29,13 @@ export function setSimpleFilterCola(simpleFilter, simpleFilterSettings, history)
             simpleFilter: simpleFilter,
             simpleFilterSettings: simpleFilterSettings
         }
+    }
+}
+
+export function setUserSelectedRestaurant(restaurantId) {
+    return {
+        type: SET_USER_SELECTED_RESTAURANT,
+        payload: restaurantId
     }
 }
 
