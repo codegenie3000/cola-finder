@@ -7,6 +7,8 @@ import Header from './Header';
 import About from './About';
 import Map from './Map';
 import Splash from './Splash';
+import IntroLocation from './IntroLocation';
+import IntroCola from './IntroCola';
 
 class App extends Component {
     constructor(props) {
@@ -22,7 +24,8 @@ class App extends Component {
                 <BrowserRouter>
                     <div>
                         <Header/>
-                        <Route exact path="/" component={ Splash } />
+                        <Route exact path="/" component={ IntroLocation } />
+                        <Route exact path="/selectCola" component={ IntroCola} />
                         <Route exact path="/about" component={ About }/>
                         <Route exact path="/map" component={ Map }/>
                     </div>

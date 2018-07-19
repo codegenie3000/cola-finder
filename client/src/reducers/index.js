@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import { reducer as formReducer } from 'redux-form';
 import authReducer from './authReducer';
 import locationReducer from './locationReducer';
 import restaurantReducer from './restaurantReducer';
@@ -8,5 +9,6 @@ export default combineReducers({
     auth: authReducer,
     filter: filterReducer,
     location: locationReducer,
-    restaurants: restaurantReducer
+    restaurants: restaurantReducer,
+    form: formReducer
 });
