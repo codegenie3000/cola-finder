@@ -39,6 +39,19 @@ module.exports = (app) => {
         }
     });
 
+    app.get('/api/location/lookup', async (req, res) => {
+        try {
+            let location = await geocoder.geocode(req.query.zip);
+            res.send({
+                latitude: location[ 0 ].latitude,
+                longitude: location[ 0 ].longitude
+            });
+            // res.send(location);
+        } catch {
+            res.send('err');
+        }
+    });
+
     app.get('/api/restaurants/lookup', async(req, res) => {
         // must be sent for all queries
         let {minLat, maxLat, minLon, maxLon, coke, pepsi} = req.query;
