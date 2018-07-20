@@ -66,9 +66,13 @@ export const setLocation = () => async dispatch => {
 export const setLocationByZip = (zipCode) => async dispatch => {
     const urlQuery = '/api/location/lookup';
     const queryString = `?zip=${zipCode}`;
-    const reducerLocation = await axios.get(`${urlQuery}${queryString}`);
+    const assembledString = `${urlQuery}${queryString}`;
+    console.log(assembledString);
+    const res = await axios.get(assembledString);
+    const resData = res.data;
+    console.log(resData);
 
-    dispatch({type: SET_LOCATION, payload: reducerLocation});
+    dispatch({type: SET_LOCATION, payload: resData});
 };
 
 export const fetchRestaurants = (minLat, maxLat, minLon, maxLon, coke, pepsi, customMix, fountain, realSugar) => async dispatch => {

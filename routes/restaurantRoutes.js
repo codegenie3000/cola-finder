@@ -42,6 +42,7 @@ module.exports = (app) => {
     app.get('/api/location/lookup', async (req, res) => {
         try {
             let location = await geocoder.geocode(req.query.zip);
+            console.log(location);
             res.send({
                 latitude: location[ 0 ].latitude,
                 longitude: location[ 0 ].longitude
