@@ -6,7 +6,7 @@ import {setLocation as setLocationByGPS} from '../actions';
 import {setLocationByZip} from '../actions';
 import {withRouter} from 'react-router-dom';
 import {bindActionCreators} from 'redux';
-import { Grid, Row, Col, Jumbotron, Button, FormGroup, FormControl, Form, ControlLabel } from 'react-bootstrap';
+import { Grid, Row, Col, Jumbotron, Button, FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
 
 const hiddenDisplay = {
     display: 'none'
@@ -15,6 +15,11 @@ const hiddenDisplay = {
 const required = value => (value || typeof value === 'number' ? undefined: 'Required');
 
 const minLength = value => value && value.length < 5 ? 'Use a 5 digit zip code' : undefined;
+
+const inputWidth = {
+    width: '200px',
+    margin: '20px auto auto auto'
+};
 
 const zipCodeTextComponent = (
     {
@@ -27,11 +32,13 @@ const zipCodeTextComponent = (
     return (
         <FormGroup
             controlId={ label }
+            bsSize="large"
         >
             <ControlLabel style={ hiddenDisplay }>{ label }</ControlLabel>
             <FormControl { ...input }
                          type={ type }
                          placeholder={ label }
+                         style={inputWidth}
             />
             { touched &&
             ((error && <span>{ error }</span>) ||
@@ -39,31 +46,6 @@ const zipCodeTextComponent = (
         </FormGroup>
     );
 };
-
-/*const CustomForm = (props) => {
-    const { handleSubmit, pristine, reset, submitting} = props;
-    return (
-        <Form
-            onSubmit={(e) => handleSubmit(e)}
-        >
-
-            <Field
-                name="zipCode"
-                component={zipCodeTextComponent}
-                validate={[required]}
-                type="text"
-                label="Zip Code"
-            />
-
-            <Button
-                type="submit"
-                bsStyle="primary"
-                bsSize="large"
-                disabled={submitting}
-            >Use Zip</Button>
-        </Form>
-    );
-};*/
 
 class CustomForm extends Component {
     constructor(props) {
@@ -73,14 +55,13 @@ class CustomForm extends Component {
     render() {
 
         return (
-            <Form
-                onSubmit={this.props.handleSubmit((formValues) => this.props.myFunction(formValues))}
+            <form
+                onSubmit={ this.props.handleSubmit((formValues) => this.props.myFunction(formValues)) }
             >
-
                 <Field
                     name="zipCode"
-                    component={zipCodeTextComponent}
-                    validate={[required, minLength]}
+                    component={ zipCodeTextComponent }
+                    validate={ [ required, minLength ] }
                     type="text"
                     label="Zip Code"
                 />
@@ -89,9 +70,10 @@ class CustomForm extends Component {
                     type="submit"
                     bsStyle="primary"
                     bsSize="large"
-                    disabled={this.props.submitting}
+                    disabled={ this.props.submitting }
                 >Use Zip</Button>
-            </Form>
+
+            </form>
         );
     }
 }
@@ -152,119 +134,6 @@ class IntroLocation extends Component {
         );
     }
 }
-
-/*class CustomForm extends Component {
-    render() {
-        return (
-            <form
-                onSubmit={this.props.mySubmit(this.props.customFunction)}
-            >
-
-                <Field
-                    name="zipCode"
-                    component={zipCodeTextComponent}
-                    validate={[required]}
-                    type="text"
-                    label="Zip Code"
-                />
-
-                <Button
-                    type="submit"
-                    bsStyle="primary"
-                    bsSize="large"
-                >Use Zip</Button>
-            </form>
-        );
-    }
-}*/
-
-/*class zipCodeTextComponent extends Component {
-    render() {
-        return (
-            <FormControl
-                type="text"
-                placeholder="Zip Code"
-            />
-        );
-    }
-}*/
-
-/*
-const ReduxFormControl = ({input, ...props}) => {
-    return (
-        <Form inline>
-            <FormGroup
-                controlId="zipForm"
-                onSubmit={props.handleSubmit(props.onSurveySubmit)}
-            >
-                <ControlLabel style={hiddenDisplay}>Zip</ControlLabel>
-                <FormControl
-                type="text"
-                placeholder="Zip Code" />
-            </FormGroup>
-            <Button
-                type="submit"
-                bsStyle="primary"
-                bsSize="large"
-            >Use Zip</Button>
-        </Form>
-    );
-};
-*/
-
-/*class IntroLocation extends Component {
-    constructor(props) {
-        super(props);
-    }
-
-    render() {
-        return (
-            <Grid>
-                <Row className="show-grid">
-                    <Col xs={ 12 }>
-                        <Jumbotron>
-                            <h1>Avoid cola disappointment</h1>
-                            <p className="lead">Find out if a restaurant has Coke or Pepsi before you make your dining decision</p>
-                        </Jumbotron>
-                    </Col>
-                </Row>
-                <Row className="show-grid text-center">
-                    <Col xs={12}>
-                        <h3>First, we'll need your location or zip code</h3>
-                        <Button
-                            type="button"
-                            bsStyle="primary"
-                            bsSize="large"
-                            onClick={() => {}}
-                        >
-                            Use GPS
-                        </Button>
-                    </Col>
-                </Row>
-                <Row className="show-grid text-center">
-                    <Col xs={12}>
-                        <h3>Or enter your zip code:</h3>
-                    </Col>
-                </Row>
-                <Row className="show-grid text-center">
-                    <Col xs={12}>
-                        <Form inline>
-                            <FormGroup controlId="zipForm">
-                                <ControlLabel style={hiddenDisplay}>Zip</ControlLabel>{' '}
-                                <FormControl type="text" placeholder="Zip Code" />
-                            </FormGroup>{' '}
-                            <Button
-                                type="submit"
-                                bsStyle="primary"
-                                bsSize="large"
-                            >Use Zip</Button>
-                        </Form>
-                    </Col>
-                </Row>
-            </Grid>
-        );
-    }
-}*/
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
