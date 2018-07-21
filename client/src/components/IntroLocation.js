@@ -94,13 +94,11 @@ class CustomForm extends Component {
 
 class IntroLocation extends Component {
     runOnSurveySubmit(values) {
-        console.log(values);
         this.props.setLocationByZip(values.zipCode);
         this.props.history.push('/selectCola');
     }
 
     setLocationAndRoute() {
-        console.log(this.props);
         this.props.setLocationByGPS();
         this.props.history.push('/selectCola');
     }
