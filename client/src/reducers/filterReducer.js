@@ -7,7 +7,7 @@ export default function (state = {simpleFilter: true, simpleFilterSettings: {cok
         case SET_SIMPLE_FILTER_COLA:
             // return action.payload;
             return {
-                ... state,
+                ...state,
                 simpleFilter: action.payload.simpleFilter,
                 simpleFilterSettings: action.payload.simpleFilterSettings
             };

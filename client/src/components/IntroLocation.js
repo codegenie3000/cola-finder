@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import {setSimpleFilterCola} from '../actions';
 import { Field, reduxForm } from 'redux-form';
 import {setLocation as setLocationByGPS} from '../actions';
 import {setLocationByZip} from '../actions';
@@ -44,7 +43,7 @@ const zipCodeTextComponent = (
     };
 
     const helpBlock = () => {
-        return touched && (error && <HelpBlock>{error}</HelpBlock> || (warning && <HelpBlock>{warning}</HelpBlock>));
+        return touched && ((error && <HelpBlock>{error}</HelpBlock>) || (warning && <HelpBlock>{warning}</HelpBlock>));
     };
 
     return (
@@ -67,10 +66,6 @@ const zipCodeTextComponent = (
 };
 
 class CustomForm extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
 
         return (
@@ -98,11 +93,6 @@ class CustomForm extends Component {
 }
 
 class IntroLocation extends Component {
-    constructor(props) {
-        super(props);
-        console.log(this.props);
-    }
-
     runOnSurveySubmit(values) {
         console.log(values);
         this.props.setLocationByZip(values.zipCode);

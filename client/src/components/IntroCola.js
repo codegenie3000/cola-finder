@@ -1,10 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
 import {setSimpleFilterCola} from '../actions';
-import {setLocation} from '../actions';
 import {withRouter} from 'react-router-dom';
 import {bindActionCreators} from 'redux';
-import { Grid, Row, Col, Jumbotron, Button } from 'react-bootstrap';
+import { Grid, Row, Col, Button } from 'react-bootstrap';
 
 const addBottomMargin = {
     marginBottom: '10px'
