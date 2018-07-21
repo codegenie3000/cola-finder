@@ -6,19 +6,24 @@ import {setLocation as setLocationByGPS} from '../actions';
 import {setLocationByZip} from '../actions';
 import {withRouter} from 'react-router-dom';
 import {bindActionCreators} from 'redux';
-import { Grid, Row, Col, Jumbotron, Button, FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
-
-const hiddenDisplay = {
-    display: 'none'
-};
+import { Grid, Row, Col, Jumbotron, Button, FormGroup, FormControl, ControlLabel, HelpBlock } from 'react-bootstrap';
 
 const required = value => (value || typeof value === 'number' ? undefined: 'Required');
 
 const minLength = value => value && value.length < 5 ? 'Use a 5 digit zip code' : undefined;
 
+const addTopMargin = {
+    marginTop: '20px'
+};
+
 const inputWidth = {
     width: '200px',
-    margin: '20px auto auto auto'
+    margin: 'auto'
+};
+
+const formatFormLabel = {
+    fontSize: '18px',
+    fontWeight: 500
 };
 
 const zipCodeTextComponent = (
@@ -29,20 +34,34 @@ const zipCodeTextComponent = (
         meta: { touched, error, warning }
     }
 ) => {
+
+    const returnValidationState = () => {
+        if (touched) {
+            return ((error && 'error') || (warning && 'warning') || 'success');
+        } else {
+            return null;
+        }
+    };
+
+    const helpBlock = () => {
+        return touched && (error && <HelpBlock>{error}</HelpBlock> || (warning && <HelpBlock>{warning}</HelpBlock>));
+    };
+
     return (
         <FormGroup
             controlId={ label }
             bsSize="large"
+            validationState={returnValidationState()}
+            style={addTopMargin}
         >
-            <ControlLabel style={ hiddenDisplay }>{ label }</ControlLabel>
+            <ControlLabel style={formatFormLabel}>Use your zip code</ControlLabel>
             <FormControl { ...input }
                          type={ type }
-                         placeholder={ label }
+                         placeholder="12345"
                          style={inputWidth}
+                         maxLength="5"
             />
-            { touched &&
-            ((error && <span>{ error }</span>) ||
-                (warning && <span>{ warning }</span>)) }
+            {helpBlock()}
         </FormGroup>
     );
 };
@@ -110,7 +129,7 @@ class IntroLocation extends Component {
                 </Row>
                 <Row className="show-grid text-center">
                     <Col xs={ 12 }>
-                        <h3>First, we'll need your location or zip code</h3>
+                        <h3>First, we'll need your location or</h3>
                         <Button
                             type="button"
                             bsStyle="primary"
