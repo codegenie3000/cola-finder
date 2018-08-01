@@ -26,8 +26,7 @@ class App extends Component {
                         <Route exact path="/" component={ IntroLocation } />
                         <Route exact path="/selectCola" component={ IntroCola} />
                         <Route exact path="/about" component={ About }/>
-                        <Route exact path="/map" component={ Map }/>
-                        <Route exact path="/loading" component={MapHandler} />
+                        <Route exact path="/map" component={ MapHandler }/>
                     </div>
                 </BrowserRouter>
             </div>
