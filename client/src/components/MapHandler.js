@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 import { CSSTransition, Transition } from 'react-transition-group';
 import Map from './Map';
-import './MapHandlerStyle.css';
 import { Col, Grid, Row, Button } from 'react-bootstrap';
 
 const overlayStyle = {
