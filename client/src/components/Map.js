@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, { Component } from 'react';
+import React, { Component, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { Grid, Row, Col } from 'react-bootstrap';
 // import { LinkContainer } from 'react-router-bootstrap';
@@ -19,26 +19,29 @@ class Map extends Component {
         }
     }
 
+
     getMapBoundsOnLoad() {
         if (!this.state.componentLoaded) {
             // console.log(this.googleMapsRef.getBounds().f, this.googleMapsRef.getBounds().b);
             const bounds = this.googleMapsRef.getBounds();
-            const minLon = bounds.f.b;
-            const maxLon = bounds.f.f;
-            const minLat = bounds.b.b;
-            const maxLat = bounds.b.f;
+            const minLat = bounds.f.b;
+            const maxLat = bounds.f.f;
+            const minLon = bounds.b.b;
+            const maxLon = bounds.b.f;
+
 
             this.props.setMapBounds({
-                minLon: minLon,
-                maxLon: maxLon,
                 minLat: minLat,
-                maxLat: maxLat
+                maxLat: maxLat,
+                minLon: minLon,
+                maxLon: maxLon
             });
 
             const { filter } = this.props;
             // console.log(simpleFilterSettings);
 
-            this.props.fetchRestaurantsSimple(minLon, maxLon, minLat, maxLat, filter.simpleFilterSettings.coke, filter.simpleFilterSettings.pepsi);
+            // this.props.fetchRestaurantsSimple(minLat, maxLat, minLon, maxLon, filter.simpleFilterSettings.coke, filter.simpleFilterSettings.pepsi);
+            this.props.fetchRestaurantsSimple(34.0489384, 34.0631604, -118.38956, -118.37476, filter.simpleFilterSettings.coke, filter.simpleFilterSettings.pepsi);
             this.setState({ componentLoaded: true });
         }
     }
@@ -63,45 +66,45 @@ class Map extends Component {
         });
     }
 
+    /*shouldComponentUpdate(nextProps, nextState) {
+        return false;
+    }*/
+
+
     renderContent() {
-        if (!this.props.location) {
+        const MapComponent = withScriptjs(withGoogleMap((props) => {
             return (
-                <div>Finding your location...</div>
+
+                <GoogleMap
+                    zoom={ 15 }
+                    center={ { lat: props.latitude, lng: props.longitude } }
+                    // onZoomChanged={ props.getMapBounds }
+                    // onIdle={ props.getMapBoundsOnLoad }
+                    onIdle={ this.getMapBoundsOnLoad.bind(this) }
+                    ref={ (map) => {
+                        this.googleMapsRef = map;
+                    } }
+                >
+                    { this.renderMarkers() }
+
+                </GoogleMap>
+
             );
-        } else {
-            const MapComponent = withScriptjs(withGoogleMap((props) => {
-                return (
-                    <GoogleMap
-                        zoom={ 15 }
-                        center={ { lat: props.latitude, lng: props.longitude } }
-                        // onZoomChanged={ props.getMapBounds }
-                        // onIdle={ props.getMapBoundsOnLoad }
-                        onIdle={ this.getMapBoundsOnLoad.bind(this) }
-                        ref={ (map) => {
-                            this.googleMapsRef = map;
-                        } }
-                    >
+        }));
 
-                        {this.renderMarkers()}
-
-                    </GoogleMap>
-                );
-            }));
-
-            return (
-                <MapComponent
-                    getMapBoundsOnLoad={ this.getMapBoundsOnLoad.bind(this) }
-                    // getMapBounds={ this.getMapBounds.bind(this) }
-                    latitude={ this.props.location.latitude }
-                    longitude={ this.props.location.longitude }
-                    isMarkerShown
-                    googleMapURL={ `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_MAPS_KEY}&?v=3.exp&libraries=geometry,drawing,places` }
-                    loadingElement={ <div style={ { height: `100%` } }/> }
-                    containerElement={ <div style={ { height: `400px` } }/> }
-                    mapElement={ <div style={ { height: `100%` } }/> }
-                />
-            );
-        }
+        return (
+            <MapComponent
+                // getMapBoundsOnLoad={ this.getMapBoundsOnLoad.bind(this) }
+                // getMapBounds={ this.getMapBounds.bind(this) }
+                latitude={ this.props.location.latitude }
+                longitude={ this.props.location.longitude }
+                isMarkerShown
+                googleMapURL={ `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_MAPS_KEY}&?v=3.exp&libraries=geometry,drawing,places` }
+                loadingElement={ <div style={ { height: `100%` } }/> }
+                containerElement={ <div style={ { height: `400px` } }/> }
+                mapElement={ <div style={ { height: `100%` } }/> }
+            />
+        );
     }
 
     render() {
@@ -167,8 +170,8 @@ function mapStateToProps(state) {
     return {
         location: state.location,
         restaurants: state.restaurants,
-        filter: state.filter,
-        mapBounds: state.mapBounds
+        filter: state.filter
+        // mapBounds: state.mapBounds
     }
 }
 
