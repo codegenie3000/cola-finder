@@ -25,7 +25,7 @@ const addPadding = {
     paddingTop: '200px'
 };
 
-const periodArray = ['.', '..', '...'];
+const periodArray = ['.', '..', '...', '....', '.....', '......'];
 let periodCount = 0;
 
 class MapHandler extends Component {
@@ -40,12 +40,12 @@ class MapHandler extends Component {
     }
 
     componentDidMount() {
-        this.timerId = setInterval(() => this.tick(), 400);
+        this.timerId = setInterval(() => this.tick(), 500);
         window.setTimeout(this.myFunction, 3000);
     }
 
     tick(){
-        if (periodCount < 3) {
+        if (periodCount < 6) {
             this.setState({counterText: `Loading${periodArray[periodCount]}`});
             periodCount++;
         } else {
