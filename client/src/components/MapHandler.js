@@ -8,7 +8,7 @@ const overlayStyle = {
     position: 'absolute',
     top: 0,
     left: 0,
-    height: '100vh',
+    height: '80vh',
     width: '100%',
     zIndex: 100,
     color: '#000'
@@ -41,7 +41,7 @@ class MapHandler extends Component {
 
     componentDidMount() {
         this.timerId = setInterval(() => this.tick(), 500);
-        window.setTimeout(this.myFunction, 3000);
+        window.setTimeout(this.myFunction, 1500);
     }
 
     tick(){

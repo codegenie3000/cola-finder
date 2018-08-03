@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, { Component, PureComponent } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Grid, Row, Col } from 'react-bootstrap';
 // import { LinkContainer } from 'react-router-bootstrap';
@@ -7,18 +7,18 @@ import { withScriptjs, GoogleMap, Marker, withGoogleMap, InfoWindow } from 'reac
 import { bindActionCreators } from 'redux';
 import { setMapBounds } from '../actions';
 import { fetchRestaurantsSimple } from '../actions';
+import { setUserSelectedRestaurant } from '../actions';
+import Markers from './Markers'
 
 class Map extends Component {
     constructor(props) {
         super(props);
         this.googleMapsRef = React.createRef(); // Creates a browser reference
-        // this.getMapBounds = this.getMapBounds.bind(this); - NOT NEEDED
-        this.state = {
-            componentLoaded: false, // Used so the map bounds are only retrieved once
-            useSimpleFilter: true
+
+        this.state ={
+            componentLoaded: false
         }
     }
-
 
     getMapBoundsOnLoad() {
         if (!this.state.componentLoaded) {
@@ -36,45 +36,19 @@ class Map extends Component {
                 minLon: minLon,
                 maxLon: maxLon
             });
-
-            const { filter } = this.props;
+            // const { filter } = this.props;
             // console.log(simpleFilterSettings);
 
             // this.props.fetchRestaurantsSimple(minLat, maxLat, minLon, maxLon, filter.simpleFilterSettings.coke, filter.simpleFilterSettings.pepsi);
-            this.props.fetchRestaurantsSimple(34.0489384, 34.0631604, -118.38956, -118.37476, filter.simpleFilterSettings.coke, filter.simpleFilterSettings.pepsi);
+            // Line below is for development purposes
+            // this.props.fetchRestaurantsSimple(34.0489384, 34.0631604, -118.38956, -118.37476, filter.simpleFilterSettings.coke, filter.simpleFilterSettings.pepsi);
             this.setState({ componentLoaded: true });
         }
     }
 
-    getMapBounds() {
-        // use this.googleMapsRef.getBounds().f and .b
-    }
-
-    renderMarkers() {
-        // get restaurants from action reducers
-        // console.log(this.props.restaurants);
-        return _.map(this.props.restaurants, restaurant => {
-            return (
-                <RestaurantMarker
-                    key={ restaurant.name }
-                    name={ restaurant.name }
-                    latitude={ restaurant.lat }
-                    longitude={ restaurant.lng }
-                    isOpen={ false }
-                />
-            );
-        });
-    }
-
-    /*shouldComponentUpdate(nextProps, nextState) {
-        return false;
-    }*/
-
-
-    renderContent() {
+    renderMap() {
         const MapComponent = withScriptjs(withGoogleMap((props) => {
             return (
-
                 <GoogleMap
                     zoom={ 15 }
                     center={ { lat: props.latitude, lng: props.longitude } }
@@ -85,10 +59,8 @@ class Map extends Component {
                         this.googleMapsRef = map;
                     } }
                 >
-                    { this.renderMarkers() }
-
+                    <Markers/>
                 </GoogleMap>
-
             );
         }));
 
@@ -108,17 +80,11 @@ class Map extends Component {
     }
 
     render() {
-
         return (
             <Grid>
                 <Row className="show-grid">
                     <Col xs={ 12 }>
-                        { this.renderContent() }
-                    </Col>
-                </Row>
-                <Row className="show-grid">
-                    <Col xs={ 12 }>
-                        <p className="lead">Change cola type:</p>
+                        { this.renderMap() }
                     </Col>
                 </Row>
             </Grid>
@@ -126,40 +92,19 @@ class Map extends Component {
     }
 }
 
-class RestaurantMarker extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            open: false
-        }
-    }
 
-    render() {
-        return (
-            <Marker
-                position={ { lat: this.props.latitude, lng: this.props.longitude } }
-                key={ this.props.name }
-                label={
-                    { text: 'foo', color: '#ffffff' }
-                }
-                onClick={ () => this.setState({ open: !this.state.open }) }
-            >
-                { this.state.open ? (
-                    <InfoWindow>
-                        <div>
-                            { this.props.name }
-                        </div>
-                    </InfoWindow>
-                ) : '' }
-            </Marker>
-        );
-    }
-}
+
+
+
+
+
+
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
         setMapBounds: setMapBounds,
-        fetchRestaurantsSimple: fetchRestaurantsSimple
+        // fetchRestaurantsSimple: fetchRestaurantsSimple,
+        // selectRestaurant: setUserSelectedRestaurant
     }, dispatch);
 }
 
@@ -169,8 +114,9 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state) {
     return {
         location: state.location,
-        restaurants: state.restaurants,
-        filter: state.filter
+        // restaurants: state.restaurants,
+        // filter: state.filter,
+        // selectedRestaurant: state.selectedRestaurant
         // mapBounds: state.mapBounds
     }
 }

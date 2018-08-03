@@ -4,11 +4,13 @@ import authReducer from './authReducer';
 import locationReducer from './locationReducer';
 import restaurantReducer from './restaurantReducer';
 import filterReducer from './filterReducer';
+import selectedRestaurantReducer from './selectedRestaurantReducer';
 
 export default combineReducers({
     auth: authReducer,
     filter: filterReducer,
     location: locationReducer,
     restaurants: restaurantReducer,
-    form: formReducer
+    form: formReducer,
+    selectedRestaurant: selectedRestaurantReducer
 });
