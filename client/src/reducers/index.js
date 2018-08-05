@@ -5,6 +5,7 @@ import locationReducer from './locationReducer';
 import restaurantReducer from './restaurantReducer';
 import filterReducer from './filterReducer';
 import selectedRestaurantReducer from './selectedRestaurantReducer';
+import restaurantDetailReducer from './restaurantDetailReducer';
 
 export default combineReducers({
     auth: authReducer,
@@ -12,5 +13,6 @@ export default combineReducers({
     location: locationReducer,
     restaurants: restaurantReducer,
     form: formReducer,
-    selectedRestaurant: selectedRestaurantReducer
+    selectedRestaurant: selectedRestaurantReducer,
+    restaurantDetail: restaurantDetailReducer
 });

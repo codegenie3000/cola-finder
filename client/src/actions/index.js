@@ -6,6 +6,7 @@ import { FETCH_RESTAURANTS_SIMPLE } from './types';
 import { SET_MAP_BOUNDS } from './types';
 import { SET_SIMPLE_FILTER_COLA } from './types';
 import { SET_USER_SELECTED_RESTAURANT} from './types';
+import { FETCH_RESTAURANT_DETAIL} from './types';
 
 export const fetchUser = () => async dispatch => {
     const res = axios.get('/api/current_user');
@@ -88,7 +89,24 @@ export const fetchRestaurantsSimple = (minLat, maxLat, minLon, maxLon, coke, pep
     const colaQuery = `coke=${coke}&pepsi=${pepsi}`;
     const query = `${urlQuery}${coordQuery}${colaQuery}`;
     const res = await axios.get(query);
-    dispatch({ type: FETCH_RESTAURANTS_SIMPLE, payload: res });
+
+    function addNumberPropToArray(restaurantArray) {
+        let counter = 1;
+        restaurantArray.forEach(function(restaurant) {
+            restaurant.restaurantNumber = counter.toString();
+            counter++
+        });
+        return restaurantArray;
+    }
+    const responseWithNumbers = addNumberPropToArray(res.data);
+    dispatch({ type: FETCH_RESTAURANTS_SIMPLE, payload: responseWithNumbers });
+};
+
+export const fetchRestaurantDetail = (restaurantId) => async dispatch => {
+    const baseURL = '/api/restaurants/';
+    const completeURL = baseURL + restaurantId;
+    const res = await axios.get(completeURL);
+    dispatch({ type: FETCH_RESTAURANT_DETAIL, payload: res});
 };
 
 export function setMapBounds(mapBounds) {

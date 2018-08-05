@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { /*CSSTransition,*/ Transition } from 'react-transition-group';
+import { Transition } from 'react-transition-group';
 import Map from './Map';
 import { Col, Grid, Row, Button } from 'react-bootstrap';
+import RestaurantDetail from './RestaurantDetail';
 
 const overlayStyle = {
     backgroundColor: '#FFF',
@@ -85,6 +86,7 @@ class MapHandler extends Component {
                         <Map/>
                     </Col>
                 </Row>
+                <RestaurantDetail />
             </Grid>
         );
     }

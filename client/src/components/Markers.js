@@ -5,9 +5,10 @@ import { Grid, Row, Col } from 'react-bootstrap';
 // import { LinkContainer } from 'react-router-bootstrap';
 import { withScriptjs, GoogleMap, Marker, withGoogleMap, InfoWindow } from 'react-google-maps';
 import { bindActionCreators } from 'redux';
-import { setMapBounds } from '../actions';
+// import { setMapBounds } from '../actions';
 import { fetchRestaurantsSimple } from '../actions';
 import { setUserSelectedRestaurant } from '../actions';
+import { fetchRestaurantDetail} from '../actions';
 
 class Markers extends Component {
     constructor(props) {
@@ -18,9 +19,9 @@ class Markers extends Component {
     }
 
     onMarkerClicked(restaurantId) {
-        // const foo = restaurantId;
         this.props.selectRestaurant(restaurantId);
         this.setState({userSelectedRestaurantId: restaurantId});
+        this.props.fetchRestaurantDetail(restaurantId);
     }
 
     componentDidMount() {
@@ -33,15 +34,16 @@ class Markers extends Component {
 
     render() {
         const onMarkerClicked = this.onMarkerClicked.bind(this);
+
         const userSelectedRestaurant = this.props.selectedRestaurant;
         if (this.props.restaurants) {
             const restaurantArray = _.map(this.props.restaurants);
 
             // add restaurantNumber key
-            restaurantArray.forEach(function(restaurant, index) {
+            /*restaurantArray.forEach(function(restaurant, index) {
                 let indexObj = {restaurantNumber: index + 1};
                 _.assignIn(restaurant, indexObj);
-            });
+            });*/
             // return restaurants with numbers added
             return restaurantArray.map(function(restaurant) {
                 return (
@@ -92,7 +94,8 @@ const RestaurantMarker = (props) => {
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
         fetchRestaurantsSimple: fetchRestaurantsSimple,
-        selectRestaurant: setUserSelectedRestaurant
+        selectRestaurant: setUserSelectedRestaurant,
+        fetchRestaurantDetail: fetchRestaurantDetail
     }, dispatch);
 }
 

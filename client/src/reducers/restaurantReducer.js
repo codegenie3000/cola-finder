@@ -7,7 +7,8 @@ export default function (state = {}, action) {
         case FETCH_RESTAURANTS:
             return _.mapKeys(action.payload.data, '_id');
         case FETCH_RESTAURANTS_SIMPLE:
-            return _.mapKeys(action.payload.data, '_id');
+            // return _.mapKeys(action.payload.data, '_id');
+            return _.mapKeys(action.payload, '_id');
         default:
             return state;
     }
