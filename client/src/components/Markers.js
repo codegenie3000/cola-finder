@@ -18,10 +18,13 @@ class Markers extends Component {
         }
     }
 
-    onMarkerClicked(restaurantId) {
-        this.props.selectRestaurant(restaurantId);
+    onMarkerClicked(restaurantId, restaurantNumber) {
         this.setState({userSelectedRestaurantId: restaurantId});
         this.props.fetchRestaurantDetail(restaurantId);
+        this.props.setUserSelectedRestaurant({
+            restaurantId: restaurantId,
+            restaurantNumber: restaurantNumber
+        });
     }
 
     componentDidMount() {
@@ -35,7 +38,7 @@ class Markers extends Component {
     render() {
         const onMarkerClicked = this.onMarkerClicked.bind(this);
 
-        const userSelectedRestaurant = this.props.selectedRestaurant;
+        const userSelectedRestaurant = this.props.selectedRestaurant.restaurantId;
         if (this.props.restaurants) {
             const restaurantArray = _.map(this.props.restaurants);
 
@@ -84,7 +87,7 @@ const RestaurantMarker = (props) => {
                 { text: restaurantNumber.toString(), color: '#ffffff' }
             }
             // onClick={ () => this.setState({ open: !this.state.open }) }
-            onClick={() => selectRestaurant(restaurantId)}
+            onClick={() => selectRestaurant(restaurantId, restaurantNumber)}
         >
             {displayInfoWindow()}
         </Marker>
@@ -94,14 +97,14 @@ const RestaurantMarker = (props) => {
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
         fetchRestaurantsSimple: fetchRestaurantsSimple,
-        selectRestaurant: setUserSelectedRestaurant,
+        setUserSelectedRestaurant: setUserSelectedRestaurant,
         fetchRestaurantDetail: fetchRestaurantDetail
     }, dispatch);
 }
 
 function mapStateToProps(state) {
     return {
-        location: state.location,
+        // location: state.location,
         restaurants: state.restaurants,
         filter: state.filter,
         selectedRestaurant: state.selectedRestaurant

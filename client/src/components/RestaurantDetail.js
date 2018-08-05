@@ -10,11 +10,12 @@ import { Col, Grid, Row, Button } from 'react-bootstrap';
 
 const RestaurantDetail = (props) => {
     if (props.restaurantDetail != null) {
-        const { restaurantNumber, name, address, city, state, zip } = props.restaurantDetail;
+        const restaurantNumber = props.restaurantNumber;
+        const { name, address, city, state, zip } = props.restaurantDetail;
         return (
             <Row>
                 <Col xs={ 12 }>
-                    {restaurantNumber}
+                    <p>{restaurantNumber}</p>
                     {name}
                     <br/>{address}
                     <br/>{city}, {state} {zip}
@@ -31,7 +32,8 @@ const RestaurantDetail = (props) => {
 
 function mapStateToProps(state) {
     return {
-        restaurantDetail: state.restaurantDetail
+        restaurantDetail: state.restaurantDetail,
+        restaurantNumber: state.selectedRestaurant.restaurantNumber
     }
 }
 

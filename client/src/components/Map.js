@@ -47,6 +47,7 @@ class Map extends Component {
     }
 
     renderMap() {
+        // const updateRestaurant = this.props.updateSelectedRestaurantNumber;
         const MapComponent = withScriptjs(withGoogleMap((props) => {
             return (
                 <GoogleMap
@@ -55,11 +56,9 @@ class Map extends Component {
                     // onZoomChanged={ props.getMapBounds }
                     // onIdle={ props.getMapBoundsOnLoad }
                     onIdle={ this.getMapBoundsOnLoad.bind(this) }
-                    ref={ (map) => {
-                        this.googleMapsRef = map;
-                    } }
+                    ref={ (map) => { this.googleMapsRef = map; } }
                 >
-                    <Markers/>
+                    <Markers />
                 </GoogleMap>
             );
         }));

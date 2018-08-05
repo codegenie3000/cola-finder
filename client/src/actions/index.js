@@ -68,10 +68,8 @@ export const setLocationByZip = (zipCode) => async dispatch => {
     const urlQuery = '/api/location/lookup';
     const queryString = `?zip=${zipCode}`;
     const assembledString = `${urlQuery}${queryString}`;
-    console.log(assembledString);
     const res = await axios.get(assembledString);
     const resData = res.data;
-    console.log(resData);
 
     dispatch({type: SET_LOCATION, payload: resData});
 };

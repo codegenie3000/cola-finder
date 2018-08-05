@@ -37,12 +37,16 @@ class MapHandler extends Component {
             showText: true,
             counterText: 'Loading'
         };
-        this.myFunction = this.changeState.bind(this);
+        this.fadeOut = this.fadeOut.bind(this);
+    }
+
+    updateSelectedRestaurantNumber(number) {
+        this.setState({ selectedRestaurantNumber: number});
     }
 
     componentDidMount() {
         this.timerId = setInterval(() => this.tick(), 500);
-        window.setTimeout(this.myFunction, 1500);
+        window.setTimeout(this.fadeOut, 1500);
     }
 
     tick(){
@@ -58,7 +62,7 @@ class MapHandler extends Component {
         clearInterval(this.timerId);
     }
 
-    changeState() {
+    fadeOut() {
         this.setState({ setIn: false, counterText: null });
         clearInterval(this.timerId);
     }
@@ -83,12 +87,18 @@ class MapHandler extends Component {
                 </Row>
                 <Row>
                     <Col xs={ 12 }>
-                        <Map/>
+                        <Map />
                     </Col>
                 </Row>
                 <RestaurantDetail />
             </Grid>
         );
+    }
+}
+
+function mapStateToProps(state) {
+    return {
+
     }
 }
 
